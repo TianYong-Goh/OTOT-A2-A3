@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels: # container label
+    app: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels: # match all the label(to know which pod belong to which container)
+      app: backend
+  template:
+    metadata:
+      labels: # pods label
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: yong37/cs3219-otot-a11:latest # docker images to clone
+          ports:
+            - name: http
+              containerPort: 8080 # self expose port
+          resources:
+            limits:
+              cpu: 40m
+              memory: 100Mi
