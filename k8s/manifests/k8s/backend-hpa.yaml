@@ -1,0 +1,19 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: backend
+  namespace: default
+spec:
+  metrics:
+    - resource:
+        name: cpu 
+        target:
+          averageUtilization: 50
+          type: Utilization
+      type: Resource
+  minReplicas: 1 # min number of replica to have
+  maxReplicas: 10 # max number of replica to have
+  scaleTargetRef: # target deployment
+    apiVersion: apps/v1
+    kind: Deployment
+    name: backend
